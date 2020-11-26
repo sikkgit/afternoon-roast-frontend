@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
+    width: "1vw",
   },
   cupLogo: {
     width: 50,
