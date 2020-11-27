@@ -1,8 +1,9 @@
-import React from "react";
-// import Paper from "@material-ui/core/Paper";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DefaultButton from "../DefaultButton/DefaultButton";
 import { Typography } from "@material-ui/core";
+import { StoriesContext } from "../../context/StoriesContext";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: { marginTop: 10 },
@@ -15,8 +16,21 @@ const useStyles = makeStyles((theme) => ({
 export default function MainContainer() {
   const { container, buttonsContainer } = useStyles();
 
+  const [stories, setStories] = useContext(StoriesContext);
+
   //TO DO
-  const getStoryTitles = () => {};
+  const getStoryTitles = () => {
+    if (stories.length) {
+      return stories.map(({ id, title }) => {
+        return (
+          <div key={id}>
+            <Link to={`/stories/${id}`}>{title}</Link>
+            <br />
+          </div>
+        );
+      });
+    }
+  };
   const getPublishedNewsLetterTitles = () => {};
 
   return (

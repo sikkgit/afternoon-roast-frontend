@@ -1,14 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
+import { StoriesProvider } from "./context/StoriesContext";
 
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <App />
+      <StoriesProvider>
+        <App />
+      </StoriesProvider>
     </React.StrictMode>
   </Router>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
