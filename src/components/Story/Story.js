@@ -1,6 +1,6 @@
 import React from "react";
 import parse from "html-react-parser";
-import "./Story.css";
+import styles from "./Story.module.css";
 
 export default function Story({ title, tag, content }) {
   return (
@@ -16,7 +16,7 @@ export default function Story({ title, tag, content }) {
       >
         <tbody>
           <tr>
-            <td className="section body-copy">
+            <td className={`${styles.section} ${styles["body-copy"]}`}>
               <table
                 {...{
                   width: "100%",
@@ -27,7 +27,7 @@ export default function Story({ title, tag, content }) {
                 }}
               >
                 <tr>
-                  <td className="tag-outer">
+                  <td className={styles["tag-outer"]}>
                     <table
                       {...{
                         align: "left",
@@ -41,7 +41,10 @@ export default function Story({ title, tag, content }) {
                       }}
                     >
                       <tr>
-                        <td className="tag-inner" style={{ color: "#ffffff" }}>
+                        <td
+                          className={styles["tag-inner"]}
+                          style={{ color: "#ffffff" }}
+                        >
                           {tag}
                         </td>
                       </tr>
@@ -51,7 +54,7 @@ export default function Story({ title, tag, content }) {
               </table>
               <h1 style={{ color: "#000000" }}>{title}</h1>
               {parse(content)}
-              <p className="p_btn-social">
+              <p className={styles["p_btn-social"]}>
                 <a
                   href="https://www.facebook.com"
                   target="_blank"

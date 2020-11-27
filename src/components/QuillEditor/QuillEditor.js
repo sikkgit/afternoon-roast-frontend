@@ -35,8 +35,9 @@ export default function QuillEditor({ value, setStateCallback }) {
     "syntax",
   ];
 
-  const handleChange = (val) => {
-    const sanitizedHtml = sanitizeHtml(val);
+  const handleChange = (value, delta, source, editor) => {
+    const sanitizedHtml = sanitizeHtml(value);
+
     setStateCallback(sanitizedHtml);
   };
 

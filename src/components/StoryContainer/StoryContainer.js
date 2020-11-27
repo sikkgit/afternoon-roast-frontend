@@ -27,7 +27,7 @@ export default function StoryContainer() {
         setStory(data);
       }
     });
-  }, [setStory]);
+  }, [setStory, id]);
 
   const displayStory = () => {
     if (story) {
