@@ -2,9 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-// import Button from "@material-ui/core/Button";
-import { Link } from "@material-ui/core";
 import cup from "../../assets/cup.svg";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -24,15 +23,9 @@ export default function Header() {
     <div>
       <AppBar position="static" color="transparent">
         <Toolbar className={toolbar}>
-          <Link href="/" style={{ textDecoration: "none" }}>
+          <Button href="/">
             <img src={cup} alt="Afternoon Roast Cup Logo" className={cupLogo} />
-          </Link>
-
-          {/* <Button color="inherit">
-            <Link href="/" style={{ textDecoration: "none" }}>
-              Home
-            </Link>
-          </Button> */}
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
