@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import QuillEditor from "../QuillEditor/QuillEditor";
+import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import { makeStyles } from "@material-ui/core/styles";
 import DefaultTextField from "../DefaultTextField/DefaultTextField";
 import DefaultButton from "../DefaultButton/DefaultButton";
@@ -65,7 +65,7 @@ export default function NewStoryContainer() {
       />
       <br />
       <DefaultTextField label="Tag" value={tag} onChange={handleTagChange} />
-      <QuillEditor value={content} setStateCallback={setContent} />
+      <RichTextEditor value={content} setStateCallback={setContent} />
       <DefaultButton text="Preview" onClick={handlePreviewClick} />
     </form>
   );
@@ -74,7 +74,6 @@ export default function NewStoryContainer() {
     <div>
       <Story {...{ title, tag, content }} />
       <DefaultButton text="Edit" onClick={() => setFormVisible(true)} />{" "}
-      {/* TODO */}
       <DefaultButton text="Submit" onClick={handleStorySubmit} />
     </div>
   );

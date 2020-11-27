@@ -4,7 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import cup from "../../assets/cup.svg";
 import { Button } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -26,7 +25,6 @@ export default function Header() {
         <Toolbar className={toolbar}>
           <Button href="/">
             <img src={cup} alt="Afternoon Roast Cup Logo" className={cupLogo} />
-            <NavLink to="/"></NavLink>
           </Button>
         </Toolbar>
       </AppBar>
