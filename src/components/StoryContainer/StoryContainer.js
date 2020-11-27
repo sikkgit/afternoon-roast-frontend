@@ -1,13 +1,17 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../../utils/constants";
+import DefaultButton from "../DefaultButton/DefaultButton";
 import Story from "../Story/Story";
+import { StoriesContext } from "../../context/StoriesContext";
 
 export default function StoryContainer() {
   const { id } = useParams();
+  const history = useHistory();
 
   const [story, setStory] = useState(null);
+  const [stories, setStories] = useContext(StoriesContext);
 
   useEffect(() => {
     async function fetchStory() {
@@ -41,5 +45,37 @@ export default function StoryContainer() {
     }
   };
 
-  return <div>{displayStory()}</div>;
+  const handleDelete = async () => {
+    if (
+      window.confirm("Are you sure you want to permanently delete this story?")
+    ) {
+      try {
+        const response = await Axios.delete(
+          `${BACKEND_BASE_URL}/stories/${id}`
+        );
+
+        const { data } = await response;
+
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setStories((prevStories) =>
+            prevStories.filter((s) => s.id !== parseInt(id))
+          );
+          history.push("/");
+          alert("Story successfully deleted.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  return (
+    <section style={{ textAlign: "right" }}>
+      <DefaultButton text="Edit" to={`/edit-story/${id}`} />{" "}
+      <DefaultButton text="Delete" onClick={handleDelete} />
+      {displayStory()}
+    </section>
+  );
 }

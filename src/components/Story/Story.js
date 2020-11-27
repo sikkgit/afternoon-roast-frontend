@@ -45,7 +45,7 @@ export default function Story({ title, tag, content }) {
                           className={styles["tag-inner"]}
                           style={{ color: "#ffffff" }}
                         >
-                          {tag}
+                          {tag.toUpperCase()}
                         </td>
                       </tr>
                     </table>

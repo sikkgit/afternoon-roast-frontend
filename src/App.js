@@ -15,6 +15,7 @@ import Axios from "axios";
 import { BACKEND_BASE_URL } from "./utils/constants";
 import NotFoundContainer from "./components/NotFoundContainer/NotFoundContainer";
 import StoryContainer from "./components/StoryContainer/StoryContainer";
+import EditStoryContainer from "./components/EditStoryContainer/EditStoryContainer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -58,6 +59,10 @@ function App() {
               component={NewNewsletterContainer}
             />
             <Route path="/stories/:id" component={StoryContainer} />
+            <Route
+              path="/edit-story/:id"
+              component={() => <NewStoryContainer edit />}
+            />
             <Route path="/" exact component={MainContainer} />
             <Route path="*" component={NotFoundContainer} />
           </Switch>

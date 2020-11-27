@@ -1,26 +1,51 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
-import { makeStyles } from "@material-ui/core/styles";
 import DefaultTextField from "../DefaultTextField/DefaultTextField";
 import DefaultButton from "../DefaultButton/DefaultButton";
 import Story from "../Story/Story";
-import axios from "axios";
 import { BACKEND_BASE_URL } from "../../utils/constants";
-import { StoriesContext, StoryContext } from "../../context/StoriesContext";
-import { useHistory } from "react-router-dom";
+import { StoriesContext } from "../../context/StoriesContext";
+import { useHistory, useParams } from "react-router-dom";
+import Axios from "axios";
 
-const useStyles = makeStyles({
-  container: {},
-});
-
-export default function NewStoryContainer() {
-  const { container } = useStyles();
+export default function NewStoryContainer(props) {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
   const [formVisible, setFormVisible] = useState(true);
   const [stories, setStories] = useContext(StoriesContext);
   const history = useHistory();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (props.edit) {
+      async function fetchStory() {
+        try {
+          const response = await Axios.get(`${BACKEND_BASE_URL}/stories/${id}`);
+          const { data } = await response;
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      fetchStory().then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          const {
+            title,
+            html: content,
+            tag: { name: tag },
+          } = data;
+
+          setTitle(title);
+          setContent(content);
+          setTag(tag);
+        }
+      });
+    }
+  }, [id, props.edit]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -42,13 +67,29 @@ export default function NewStoryContainer() {
         tag,
       };
 
-      const response = await axios.post(`${BACKEND_BASE_URL}/stories`, story);
+      let response;
+
+      if (props.edit) {
+        response = await Axios.put(`${BACKEND_BASE_URL}/stories/${id}`, story);
+      } else {
+        response = await Axios.post(`${BACKEND_BASE_URL}/stories`, story);
+      }
+
       const { data } = await response;
 
       if (data.error) {
         console.log(data.error);
       } else {
-        setStories((prevStories) => [data, ...prevStories]);
+        if (props.edit) {
+          setStories((prevStories) =>
+            prevStories.map((s) => {
+              return s.id === parseInt(id) ? data : s;
+            })
+          );
+        } else {
+          setStories((prevStories) => [data, ...prevStories]);
+        }
+
         history.push("/stories/" + data.id);
       }
     } catch (error) {
@@ -78,9 +119,5 @@ export default function NewStoryContainer() {
     </div>
   );
 
-  return (
-    <section className={container}>
-      {formVisible ? articleForm : preview}
-    </section>
-  );
+  return <section>{formVisible ? articleForm : preview}</section>;
 }
