@@ -4,7 +4,10 @@ import sanitizeHtml from "sanitize-html";
 
 export default function RichTextEditor({ value, setStateCallback }) {
   const handleEditorChange = (content) => {
-    const sanitizedHtml = sanitizeHtml(content);
+    const sanitizedHtml = sanitizeHtml(content, {
+      allowedTags: false,
+      allowedAttributes: false,
+    });
     setStateCallback(sanitizedHtml);
   };
 
