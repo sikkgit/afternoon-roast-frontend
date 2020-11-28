@@ -3,10 +3,9 @@ import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import DefaultTextField from "../DefaultTextField/DefaultTextField";
 import DefaultButton from "../DefaultButton/DefaultButton";
 import Story from "../Story/Story";
-import { BACKEND_BASE_URL } from "../../utils/constants";
 import { StoriesContext } from "../../context/StoriesContext";
 import { useHistory, useParams } from "react-router-dom";
-import Axios from "axios";
+import { fetchStory, postStory, editStory } from "../../utils/fetches";
 
 export default function NewStoryContainer(props) {
   const [content, setContent] = useState("");
@@ -19,17 +18,7 @@ export default function NewStoryContainer(props) {
 
   useEffect(() => {
     if (props.edit) {
-      async function fetchStory() {
-        try {
-          const response = await Axios.get(`${BACKEND_BASE_URL}/stories/${id}`);
-          const { data } = await response;
-          return data;
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
-      fetchStory().then((data) => {
+      fetchStory(id).then((data) => {
         if (data.error) {
           console.log(data.error);
         } else {
@@ -52,41 +41,29 @@ export default function NewStoryContainer(props) {
   const handlePreviewClick = () => setFormVisible(false);
 
   const handleStorySubmit = async () => {
-    try {
-      const story = {
-        title,
-        html: content,
-        tag,
-      };
+    const story = {
+      title,
+      html: content,
+      tag,
+    };
 
-      let response;
+    let data = await (props.edit ? editStory(id, story) : postStory(story));
 
+    if (data.error) {
+      console.log(data.error);
+    } else {
       if (props.edit) {
-        response = await Axios.put(`${BACKEND_BASE_URL}/stories/${id}`, story);
+        setStories((prevStories) =>
+          prevStories.map((s) => {
+            return s.id === parseInt(id) ? data : s;
+          })
+        );
       } else {
-        response = await Axios.post(`${BACKEND_BASE_URL}/stories`, story);
+        setStories((prevStories) => [data, ...prevStories]);
       }
-
-      const { data } = await response;
-
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        if (props.edit) {
-          setStories((prevStories) =>
-            prevStories.map((s) => {
-              return s.id === parseInt(id) ? data : s;
-            })
-          );
-        } else {
-          setStories((prevStories) => [data, ...prevStories]);
-        }
-
-        history.push("/stories/" + data.id);
-      }
-    } catch (error) {
-      console.log(error);
     }
+
+    history.push("/stories/" + data.id);
   };
 
   const articleForm = (

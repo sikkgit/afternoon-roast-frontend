@@ -40,20 +40,23 @@ export default function Story({ title, tag, content }) {
                         },
                       }}
                     >
-                      <tr>
-                        <td
-                          className={styles["tag-inner"]}
-                          style={{ color: "#ffffff" }}
-                        >
-                          {tag.toUpperCase()}
-                        </td>
-                      </tr>
+                      {tag && (
+                        <tr>
+                          <td
+                            className={styles["tag-inner"]}
+                            style={{ color: "#ffffff" }}
+                          >
+                            {tag.toUpperCase()}
+                          </td>
+                        </tr>
+                      )}
                     </table>
                   </td>
                 </tr>
               </table>
-              <h1 style={{ color: "#000000" }}>{title}</h1>
-              {parse(content)}
+              <h1 style={{ color: "#000000" }}>{title && title}</h1>
+              {content && parse(content)}
+
               <p className={styles["p_btn-social"]}>
                 <a
                   href="https://www.facebook.com"

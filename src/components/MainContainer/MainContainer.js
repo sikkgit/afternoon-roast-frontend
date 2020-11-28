@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DefaultButton from "../DefaultButton/DefaultButton";
 import { Typography } from "@material-ui/core";
 import { StoriesContext } from "../../context/StoriesContext";
 import { Link } from "react-router-dom";
 import { NewslettersContext } from "../../context/NewslettersContext";
+import { getFormattedDate } from "../../utils/helperFns";
 
 const useStyles = makeStyles((theme) => ({
   container: { marginTop: 10 },
@@ -12,35 +13,49 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  titleTable: {
+    textAlign: "left",
+    "& td": { padding: "3px 5px" },
+  },
 }));
 
 export default function MainContainer() {
-  const { container, buttonsContainer } = useStyles();
-
+  const { container, buttonsContainer, titleTable } = useStyles();
   const [newsletters, setNewsletters] = useContext(NewslettersContext);
   const [stories, setStories] = useContext(StoriesContext);
 
-  //TO DO
   const getStoryTitles = () => {
-    if (stories.length) {
-      return stories.map(({ id, title }) => {
+    if (stories && stories.length) {
+      return stories.map(({ id, title, formatted_date }) => {
         return (
-          <div key={id}>
-            <Link to={`/stories/${id}`}>{title}</Link>
-            <br />
-          </div>
+          <tr key={id}>
+            <td>
+              <Link to={`/stories/${id}`}>{title}</Link>
+            </td>
+            <td>
+              <Typography variant="caption" display="block">
+                {getFormattedDate(formatted_date)}
+              </Typography>
+            </td>
+          </tr>
         );
       });
     }
   };
   const getPublishedNewsLetterTitles = () => {
-    if (newsletters.length) {
-      return newsletters.map(({ id, title }) => {
+    if (newsletters && newsletters.length) {
+      return newsletters.map(({ id, title, formatted_date }) => {
         return (
-          <div key={id}>
-            <Link to={`/newsletters/${id}`}>{title}</Link>
-            <br />
-          </div>
+          <tr key={id}>
+            <td>
+              <Link to={`/newsletters/${id}`}>{title}</Link>
+            </td>
+            <td>
+              <Typography variant="caption" display="block">
+                {getFormattedDate(formatted_date)}
+              </Typography>
+            </td>
+          </tr>
         );
       });
     }
@@ -56,16 +71,16 @@ export default function MainContainer() {
         <Typography align="center" color="primary" variant="h6">
           My Stories
         </Typography>
-        {getStoryTitles()}
+        <table className={titleTable}>{getStoryTitles()}</table>
       </div>
-
       <br />
+      <hr />
 
       <div>
         <Typography align="center" color="primary" variant="h6">
           Published Newsletters
         </Typography>
-        {getPublishedNewsLetterTitles()}
+        <table className={titleTable}>{getPublishedNewsLetterTitles()}</table>
       </div>
     </section>
   );

@@ -1,8 +1,8 @@
-import { Paper, Typography } from "@material-ui/core";
+import { Paper, Typography, makeStyles } from "@material-ui/core";
 import React from "react";
-import { makeStyles } from "@material-ui/core";
 import Logo from "../../Logo/Logo";
 import parse from "html-react-parser";
+import { getFormattedDate } from "../../../utils/helperFns";
 
 const useStyles = makeStyles({
   card: {
@@ -21,19 +21,12 @@ const useStyles = makeStyles({
 export default function StoryCard({ starter, date, html, tag, title }) {
   const { card, header } = useStyles();
 
-  const getFormattedDate = () => {
-    date = new Date(date);
-    const month = date.toLocaleString("default", { month: "long" });
-
-    return `${month} ${date.getDate() + 1}, ${date.getFullYear()}`;
-  };
-
   const getHeading = () => {
     if (starter) {
       return (
         <div className={header}>
           <Logo size={140} />
-          <div style={{ fontSize: 14 }}>{getFormattedDate()}</div>
+          <div style={{ fontSize: 14 }}>{getFormattedDate(date)}</div>
         </div>
       );
     } else {
@@ -41,8 +34,7 @@ export default function StoryCard({ starter, date, html, tag, title }) {
         <>
           <Typography
             variant="h6"
-            color="primary"
-            style={{ fontWeight: 700, fontSize: 18 }}
+            style={{ fontWeight: 700, fontSize: 18, color: "#1ba2b3" }}
           >
             {tag.toUpperCase()}
           </Typography>

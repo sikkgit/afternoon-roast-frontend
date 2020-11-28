@@ -1,6 +1,12 @@
+import { Typography } from "@material-ui/core";
 import React from "react";
-import Story from "../Story/Story";
+import { Link } from "react-router-dom";
 
 export default function NotFoundContainer() {
-  return <div>helllo from not found container</div>;
+  return (
+    <Typography variant="h6">
+      Oops. That page could not be found. <br />
+      <Link to="/">Go Home</Link>
+    </Typography>
+  );
 }
