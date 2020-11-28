@@ -4,6 +4,7 @@ import DefaultButton from "../DefaultButton/DefaultButton";
 import { Typography } from "@material-ui/core";
 import { StoriesContext } from "../../context/StoriesContext";
 import { Link } from "react-router-dom";
+import { NewslettersContext } from "../../context/NewslettersContext";
 
 const useStyles = makeStyles((theme) => ({
   container: { marginTop: 10 },
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MainContainer() {
   const { container, buttonsContainer } = useStyles();
 
+  const [newsletters, setNewsletters] = useContext(NewslettersContext);
   const [stories, setStories] = useContext(StoriesContext);
 
   //TO DO
@@ -31,7 +33,18 @@ export default function MainContainer() {
       });
     }
   };
-  const getPublishedNewsLetterTitles = () => {};
+  const getPublishedNewsLetterTitles = () => {
+    if (newsletters.length) {
+      return newsletters.map(({ id, title }) => {
+        return (
+          <div key={id}>
+            <Link to={`/newsletters/${id}`}>{title}</Link>
+            <br />
+          </div>
+        );
+      });
+    }
+  };
 
   return (
     <section className={container}>
@@ -45,6 +58,8 @@ export default function MainContainer() {
         </Typography>
         {getStoryTitles()}
       </div>
+
+      <br />
 
       <div>
         <Typography align="center" color="primary" variant="h6">

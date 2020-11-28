@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { StoriesProvider } from "./context/StoriesContext";
+import { NewslettersProvider } from "./context/NewslettersContext";
 
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <StoriesProvider>
-        <App />
-      </StoriesProvider>
+      <NewslettersProvider>
+        <StoriesProvider>
+          <App />
+        </StoriesProvider>
+      </NewslettersProvider>
     </React.StrictMode>
   </Router>,
   document.getElementById("root")

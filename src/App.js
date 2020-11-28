@@ -15,7 +15,8 @@ import Axios from "axios";
 import { BACKEND_BASE_URL } from "./utils/constants";
 import NotFoundContainer from "./components/NotFoundContainer/NotFoundContainer";
 import StoryContainer from "./components/StoryContainer/StoryContainer";
-import EditStoryContainer from "./components/EditStoryContainer/EditStoryContainer";
+import { NewslettersContext } from "./context/NewslettersContext";
+import NewsletterContainer from "./components/NewsletterContainer/NewsletterContainer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const { container } = useStyles();
   const [stories, setStories] = useContext(StoriesContext);
+  const [newsletters, setNewsletters] = useContext(NewslettersContext);
 
   useEffect(() => {
     async function fetchStories() {
@@ -41,7 +43,19 @@ function App() {
     }
 
     fetchStories().then((result) => setStories(result));
-  }, [setStories]);
+
+    async function fetchNewsletters() {
+      try {
+        const response = await Axios.get(`${BACKEND_BASE_URL}/newsletters`);
+        const { data } = await response;
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchNewsletters().then((result) => setNewsletters(result));
+  }, [setStories, setNewsletters]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,6 +77,7 @@ function App() {
               path="/edit-story/:id"
               component={() => <NewStoryContainer edit />}
             />
+            <Route path="/newsletters/:id" component={NewsletterContainer} />
             <Route path="/" exact component={MainContainer} />
             <Route path="*" component={NotFoundContainer} />
           </Switch>

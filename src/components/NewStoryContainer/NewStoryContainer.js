@@ -47,17 +47,9 @@ export default function NewStoryContainer(props) {
     }
   }, [id, props.edit]);
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleTagChange = (e) => {
-    setTag(e.target.value);
-  };
-
-  const handlePreviewClick = () => {
-    setFormVisible(false);
-  };
+  const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleTagChange = (e) => setTag(e.target.value);
+  const handlePreviewClick = () => setFormVisible(false);
 
   const handleStorySubmit = async () => {
     try {
