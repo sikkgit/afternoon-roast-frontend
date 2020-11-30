@@ -16,14 +16,14 @@ import { NewslettersContext } from "./context/NewslettersContext";
 import NewsletterContainer from "./components/NewsletterContainer/NewsletterContainer";
 import { fetchStories, fetchNewsletters } from "./utils/fetches";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   container: {
     maxWidth: 800,
     margin: "50px auto",
     padding: "30px 30px 40px",
     borderRadius: 20,
   },
-}));
+});
 
 function App() {
   const { container } = useStyles();

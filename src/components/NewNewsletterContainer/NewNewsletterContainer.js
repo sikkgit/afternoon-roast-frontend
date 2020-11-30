@@ -12,16 +12,29 @@ import { renderToString } from "react-dom/server";
 import { postNewsletter } from "../../utils/fetches";
 
 export default function NewNewsletterContainer() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [formVisible, setFormVisible] = useState(true);
   const [newsletters, setNewsletters] = useContext(NewslettersContext);
   const [stories, setStories] = useContext(StoriesContext);
-  const [existingNewsletter, setExistingNewsletter] = useState(null);
-  const [storiesToPublish, setStoriesToPublish] = useState([]);
-  const [disableSubmit, setDisableSubmit] = useState(false);
+
   const history = useHistory();
+  const [state, setState] = useState({
+    title: "",
+    description: "",
+    date: "",
+    formVisible: true,
+    existingNewsletter: null,
+    storiesToPublish: [],
+    disableSubmit: false,
+  });
+
+  const {
+    title,
+    description,
+    date,
+    formVisible,
+    existingNewsletter,
+    storiesToPublish,
+    disableSubmit,
+  } = state;
 
   useEffect(() => {
     let newsletterFound;
@@ -29,26 +42,35 @@ export default function NewNewsletterContainer() {
 
     if (newsletters) {
       newsletterFound = newsletters.find((n) => n.formatted_date === date);
-      setExistingNewsletter(newsletterFound);
+      setState((prevState) => ({
+        ...prevState,
+        existingNewsletter: newsletterFound,
+      }));
     }
 
     if (stories) {
       storiesFound = stories.filter((s) => s.formatted_date === date);
-      setStoriesToPublish(storiesFound);
+      setState((prevState) => ({
+        ...prevState,
+        storiesToPublish: storiesFound,
+      }));
     }
 
     if (newsletterFound || (storiesFound && !storiesFound.length)) {
-      setDisableSubmit(true);
+      setState((prevState) => ({ ...prevState, disableSubmit: true }));
     } else {
-      setDisableSubmit(false);
+      setState((prevState) => ({ ...prevState, disableSubmit: false }));
     }
-  }, [date, setDisableSubmit, newsletters, stories]);
+  }, [date, disableSubmit, newsletters, stories]);
 
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  const handlePreviewClick = () => setFormVisible(false);
+  const handleTitleChange = (e) => {
+    setState((prevState) => ({ ...prevState, title: e.target.value }));
+  };
+  const handlePreviewClick = () => {
+    setState((prevState) => ({ ...prevState, formVisible: false }));
+  };
   const handleDateChange = (e) => {
-    const dateSelected = e.target.value;
-    setDate(dateSelected);
+    setState((prevState) => ({ ...prevState, date: e.target.value }));
   };
 
   const errorMessage = existingNewsletter && (
@@ -117,7 +139,9 @@ export default function NewNewsletterContainer() {
 
         <RichTextEditor
           value={description}
-          setStateCallback={setDescription}
+          setStateCallback={(description) =>
+            setState((prevState) => ({ ...prevState, description }))
+          }
           size={200}
         />
       </label>
@@ -159,7 +183,12 @@ export default function NewNewsletterContainer() {
   const preview = (
     <div>
       {assembledNewsletter}
-      <DefaultButton text="Edit" onClick={() => setFormVisible(true)} />{" "}
+      <DefaultButton
+        text="Edit"
+        onClick={() =>
+          setState((prevState) => ({ ...prevState, formVisible: true }))
+        }
+      />{" "}
       <DefaultButton text="Submit" onClick={handleNewsletterSubmit} />
     </div>
   );

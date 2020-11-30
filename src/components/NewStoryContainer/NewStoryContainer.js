@@ -8,13 +8,18 @@ import { useHistory, useParams } from "react-router-dom";
 import { fetchStory, postStory, editStory } from "../../utils/fetches";
 
 export default function NewStoryContainer(props) {
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
-  const [tag, setTag] = useState("");
-  const [formVisible, setFormVisible] = useState(true);
-  const [stories, setStories] = useContext(StoriesContext);
   const history = useHistory();
   const { id } = useParams();
+  const [stories, setStories] = useContext(StoriesContext);
+
+  const [state, setState] = useState({
+    content: "",
+    title: "",
+    tag: "",
+    formVisible: true,
+  });
+
+  const { content, title, tag, formVisible } = state;
 
   useEffect(() => {
     if (props.edit) {
@@ -28,17 +33,23 @@ export default function NewStoryContainer(props) {
             tag: { name: tag },
           } = data;
 
-          setTitle(title);
-          setContent(content);
-          setTag(tag);
+          setState((prevState) => ({ ...prevState, title, content, tag }));
         }
       });
     }
   }, [id, props.edit]);
 
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleTagChange = (e) => setTag(e.target.value);
-  const handlePreviewClick = () => setFormVisible(false);
+  const handleTitleChange = (e) => {
+    setState((prevState) => ({ ...prevState, title: e.target.value }));
+  };
+
+  const handleTagChange = (e) => {
+    setState((prevState) => ({ ...prevState, tag: e.target.value }));
+  };
+
+  const handlePreviewClick = () => {
+    setState((prevState) => ({ ...prevState, formVisible: false }));
+  };
 
   const handleStorySubmit = async () => {
     const story = {
@@ -75,7 +86,12 @@ export default function NewStoryContainer(props) {
       />
       <br />
       <DefaultTextField label="Tag" value={tag} onChange={handleTagChange} />
-      <RichTextEditor value={content} setStateCallback={setContent} />
+      <RichTextEditor
+        value={content}
+        setStateCallback={(content) =>
+          setState((prevState) => ({ ...prevState, content }))
+        }
+      />
       <DefaultButton text="Preview" onClick={handlePreviewClick} />
     </form>
   );
@@ -83,7 +99,12 @@ export default function NewStoryContainer(props) {
   const preview = (
     <div>
       <Story {...{ title, tag, content }} />
-      <DefaultButton text="Edit" onClick={() => setFormVisible(true)} />{" "}
+      <DefaultButton
+        text="Edit"
+        onClick={() =>
+          setState((prevState) => ({ ...prevState, formVisible: true }))
+        }
+      />{" "}
       <DefaultButton text="Submit" onClick={handleStorySubmit} />
     </div>
   );
