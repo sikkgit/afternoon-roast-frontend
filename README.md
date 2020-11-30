@@ -33,9 +33,11 @@ A Morning Brew-inspired simple content management system that allows writers to 
 
 ### Stories and Newsletters
 * View an index of all stories and newsletter issues, organized by date
+
 ![Afternoon Roast screenshot](https://i.ibb.co/2SQP6sg/Screen-Shot-2020-11-29-at-10-36-20-PM.png)
 
 * View, create, preview, submit, edit, and delete a story using TinyMCE editor (persisted to Lyra API)
+
 ![Screenshot](https://i.ibb.co/BgnKtf2/Screen-Shot-2020-11-29-at-10-45-36-PM.png)
 
 ![Screenshot](https://i.ibb.co/xDTWbGK/Screen-Shot-2020-11-29-at-10-47-03-PM.png)
@@ -43,13 +45,19 @@ A Morning Brew-inspired simple content management system that allows writers to 
 ![Screenshot](https://i.ibb.co/BNCBLpT/Screen-Shot-2020-11-29-at-10-44-13-PM.png)
 
 * Build a newsletter issue
+
 ![Screenshot](https://i.ibb.co/TPt2BvX/Screen-Shot-2020-11-29-at-10-56-34-PM.png)
+
 * Preview and submit the newsletter with stories submitted within the issue date (persisted to Lyra API)
+
 ![Screenshot](https://i.ibb.co/QrpMD6P/Screen-Shot-2020-11-29-at-10-57-51-PM.png)
 
 ![Screenshot](https://i.ibb.co/KXms0fG/Screen-Shot-2020-11-29-at-10-58-29-PM.png)
+
 * Delete a newsletter issue (which undoes publishing to API and un-associates stories with newsletter issue)
+
 ![Screenshot](https://i.ibb.co/9WTND1q/Screen-Shot-2020-11-29-at-10-59-19-PM.png)
+
 <a name="tech-stack"/>
 
 ## Tech Stack
