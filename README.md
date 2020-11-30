@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Access-A-Place
+[Video Demo](https://youtu.be/nqb_-oCB6AM)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![enter image description here](https://i.ibb.co/b5w9gqW/Screen-Shot-2020-11-29-at-10-39-10-PM.png)
 
-## Available Scripts
+A Morning Brew-inspired simple content management system that allows writers to create stories, attach stories to a particular newsletter, and ultimately "publish" the newsletter to an API.
 
-In the project directory, you can run:
+[Link to Backend API](https://github.com/vuonga1103/afternoon-roast-backend)
 
-### `yarn start`
+## Table of Contents
+* [Getting Started](#getting-started)
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Tools](#tools)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<a name="getting-started"/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
+1. Install [Rails Backend API](https://github.com/vuonga1103/afternoon-roast-backend)
+2. Install [Node.js and npm](https://www.npmjs.com/get-npm)
+    ```$ brew install node```
+3. Clone this repo and cd into the directory
+4. Install all dependencies
+    ```$ npm install```
+5. Obtain [TinyMCE API Key](http://tiny.cloud/) and include in `.env.local` in the following format: 
+```REACT_APP_TINY_MCE_KEY=<YOUR KEY HERE> ```
+6. Make sure the Rails server is running and then run the app
+    ```$ npm start```
+    
+<a name="features"/>
 
-### `yarn test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Stories and Newsletters
+* View an index of all stories and newsletter issues, organized by date
+![Afternoon Roast screenshot](https://i.ibb.co/2SQP6sg/Screen-Shot-2020-11-29-at-10-36-20-PM.png)
 
-### `yarn build`
+* View, create, preview, submit, edit, and delete a story using TinyMCE editor (persisted to Lyra API)
+![Screenshot](https://i.ibb.co/BgnKtf2/Screen-Shot-2020-11-29-at-10-45-36-PM.png)
+![Screenshot](https://i.ibb.co/xDTWbGK/Screen-Shot-2020-11-29-at-10-47-03-PM.png)
+![Screenshot](https://i.ibb.co/BNCBLpT/Screen-Shot-2020-11-29-at-10-44-13-PM.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Build a newsletter issue
+![Screenshot](https://i.ibb.co/TPt2BvX/Screen-Shot-2020-11-29-at-10-56-34-PM.png)
+* Preview and submit the newsletter with stories submitted within the issue date (persisted to Lyra API)
+![Screenshot](https://i.ibb.co/QrpMD6P/Screen-Shot-2020-11-29-at-10-57-51-PM.png)
+![Screenshot](https://i.ibb.co/KXms0fG/Screen-Shot-2020-11-29-at-10-58-29-PM.png)
+* Delete a newsletter issue (which undoes publishing to API and un-associates stories with newsletter issue)
+![Screenshot](https://i.ibb.co/9WTND1q/Screen-Shot-2020-11-29-at-10-59-19-PM.png)
+<a name="tech-stack"/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack
+* React.js
+* Ruby on Rails API (Backend: https://github.com/vuonga1103/afternoon-roast-backend)
+* PostgreSQL
+* HTML/CSS
+* Material UI
+* Active Record
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<a name="tools"/>
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Tools
+* [Rack CORS](https://github.com/cyu/rack-cors)
+* [ActiveModel::Serializer](https://github.com/rails-api/active_model_serializers)
+* [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+* [Axios](https://www.npmjs.com/package/axios)
+* [TinyMCE](https://github.com/tinymce/tinymce-react)
+* [Sanitize HTML](https://www.npmjs.com/package/sanitize-html)
+* [HTML React Parser](https://github.com/remarkablemark/html-react-parser)
